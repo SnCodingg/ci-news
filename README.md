@@ -66,3 +66,32 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - json (enabled by default - don't turn it off)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+
+## Installation
+
+Use these steps to create a local installation for development and testing.
+
+1. Clone the repo: `git clone https://github.com/SnCodingg/ci-news.git`
+2. Work in the repo directory: `cd ci-news`
+3. Make sure the **writable** folder is accessible: `chmod -R 777 writable`
+4. Install dependencies: `composer install`
+5. Create your **.env** file: `cp env .env`
+6. Edit **.env** 
+
+7. Seed fake Forum data
+
+    The website is intended to live on the same server as the forums, and uses the forum
+    database to pull in the most recent posts. When developing locally, this poses a challenge.
+    To make local development simpler, a migration and seed have been provided to setup a
+    table with some mock data that can be used in place of having a local MyBB install.
+
+    1. Migrate the database: `php spark migrate -all`
+    2. Run the seeder: `php spark db:seed News`
+
+At this point you should have a usable version of the current code! Try launching it locally:
+
+1. From the repo directory start serving the website: `php spark serve`
+2. In your web browser of choice navigate to the local URL: `http://localhost:8080`
+
+> **Note** The example commands above are for Linux-based systems. You may need to adjust for your operating system.
