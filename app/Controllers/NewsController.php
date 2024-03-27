@@ -31,4 +31,35 @@ class NewsController extends BaseController
 
         return view('single',$data);
     }
+    public function addNewsForm(){
+       return view('addnews');
+    }
+    public function addNews(){
+        $model = new NewsModel();
+        $data = [
+            'title'=>$this->request->getVar('title'),
+            'slug'=>$this->request->getVar('slug'),
+            'body'=>$this->request->getVar('body')
+        ];
+        $model->save($data);
+        return redirect()->to('/allnews');
+    }
+    public function allNews(){
+        $model = model(NewsModel::class);
+
+        $data = [
+            'news'  => $model->getNews(),
+        ];
+        return view('allnews',$data);
+    }
+
+    public function deleteNews($id=null){
+        $model = new NewsModel();
+        if ($id === false) {
+            return redirect('/allnews');
+        }
+
+        $model->where(['id' => $id])->delete();
+        return redirect()->to('/allnews');
+    }
 }
